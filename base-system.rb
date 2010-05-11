@@ -36,3 +36,15 @@ dep 'configured fstab', :for => :linux do
     	render_erb 'base-system/fstab.erb', :to => target, :sudo => !File.writable?(File.dirname(target))
     }
 end
+
+dep 'existing hosts', :for => :linux do
+
+    target = '/etc/hosts'
+
+    met? {
+	File.exist? target
+    }
+    meet {
+	render_erb 'base-system/hosts.erb', :to => target, :sudo => !File.writable?(File.dirname(target))
+    }
+end
