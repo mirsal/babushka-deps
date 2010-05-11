@@ -1,0 +1,20 @@
+# /etc/fstab: static file system information.
+#
+# <%= generated_by_babushka %>
+#
+# file system    mount point   type    options                  dump pass
+<%= var :rootfs %>         /             ext3    defaults                 0    1
+<%= var :bootfs %>         /boot         ext3    ro,nosuid,nodev          0    2
+
+<%= var :swapfs %>         none          swap    sw                       0    0
+proc             /proc         proc    defaults                 0    0
+sys              /sys          sysfs   defaults                 0    0
+
+/dev/fd0         /media/floppy auto    noauto,rw,sync,user,exec 0    0
+/dev/cdrom       /media/cdrom  iso9660 noauto,ro,user,exec      0    0
+
+<%= var :tmpfs %>         /tmp          ext3    rw,nosuid,nodev          0    2
+<%= var :varfs %>         /var          ext3    rw,nosuid,nodev          0    2
+<%= var :usrfs %>         /usr          ext3    rw,nodev                 0    2
+
+<%= var :homefs %>         /home         ext3    rw,nosuid,nodev          0    2
