@@ -71,7 +71,6 @@ meta :security_apt_source do
         grep(/^deb .* #{Babushka::Base.host.name}-security (\w+ )*#{Regexp.escape(name.to_s)}/, '/etc/apt/sources.list')
       }
     }
-    before { Babushka::AptHelper.source_for_system }
     meet {
       source_name.each {|name|
         append_to_file "deb #{security_source_for_system} #{Babushka::Base.host.name}-security #{name}", '/etc/apt/sources.list', :sudo => true
