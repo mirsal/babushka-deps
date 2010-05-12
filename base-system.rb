@@ -63,7 +63,7 @@ end
 meta :tasksel do
     accepts_list_for :task
     template {
-	met? {}
+	met? { shell 'tasksel --list-tasks | grep "^i server"' }
 	meet {
 	    sudo "tasksel install #{task}"
 	}
