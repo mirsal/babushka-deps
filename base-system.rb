@@ -48,3 +48,7 @@ dep 'existing hosts', :for => :linux do
 	render_erb 'base-system/hosts.erb', :to => target, :sudo => !File.writable?(File.dirname(target))
     }
 end
+
+apt_source 'lucid security apt source', :for => :ubuntu  do
+	  source_name 'lucid-security'
+end
