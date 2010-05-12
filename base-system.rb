@@ -24,6 +24,9 @@ dep 'existing fstab', :for => :linux do
 end
 
 pkg 'kernel image', :for => :ubuntu do
+    met? {
+        shell "ls --file-type /boot|grep -e \"[^/]$\""
+    }
     installs {
         via :apt, 'linux-server'
     }
