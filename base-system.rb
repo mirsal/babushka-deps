@@ -60,7 +60,7 @@ def security_source_for_system
     {
       :debian => 'http://security.debian.org/security',
       :ubuntu => 'http://security.ubuntu.com/security'
-    } [Base.host.flavour]
+    } [Babushka::Base.host.flavour]
 end
 
 meta :security_apt_source do
