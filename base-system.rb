@@ -66,16 +66,31 @@ end
 meta :security_apt_source do
   accepts_list_for :source_name
   template {
-    met? {
-      source_name.all? {|name|
-        grep(/^deb .* #{Babushka::Base.host.name}-security (\w+ )*#{Regexp.escape(name.to_s)}/, '/etc/apt/sources.list')
-      }
-    }
-    meet {
-      source_name.each {|name|
-        append_to_file "deb #{security_source_for_system} #{Babushka::Base.host.name}-security #{name}", '/etc/apt/sources.list', :sudo => true
-      }
-    }
+    requires(dep("apt binary security repo") {
+        met? {
+          source_name.all? {|name|
+            grep(/^deb .* #{Babushka::Base.host.name}-security (\w+ )*#{Regexp.escape(name.to_s)}/, '/etc/apt/sources.list')
+          }
+        }
+        meet {
+          source_name.each {|name|
+            append_to_file "deb #{security_source_for_system} #{Babushka::Base.host.name}-security #{name}", '/etc/apt/sources.list', :sudo => true
+          }
+        }
+    })
+    requires(dep("apt source code security repo") {
+        met? {
+          source_name.all? {|name|
+            grep(/^deb-src .* #{Babushka::Base.host.name}-security (\w+ )*#{Regexp.escape(name.to_s)}/, '/etc/apt/sources.list')
+          }
+        }
+        meet {
+          source_name.each {|name|
+            append_to_file "deb-src #{security_source_for_system} #{Babushka::Base.host.name}-security #{name}", '/etc/apt/sources.list', :sudo => true
+          }
+        }
+    })
+    met? { provided? }
     after { Babushka::AptHelper.update_pkg_lists }
   }
 end
