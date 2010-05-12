@@ -7,6 +7,13 @@ dep 'populated dev', :for => :linux do
     }
 end
 
+dep 'mounted proc', :for => :linux do
+    met? { shell 'test "$(ls -A /proc)"' }
+    meet {
+	sudo 'mount -t proc none /proc'
+    }
+end
+
 dep 'existing fstab', :for => :linux do
     met? {
 	File.exist? '/etc/fstab'
@@ -17,7 +24,7 @@ dep 'existing fstab', :for => :linux do
 end
 
 dep 'configured fstab', :for => :linux do
-    requires 'populated dev', 'existing fstab'
+    requires 'populated dev', 'mounted proc', 'existing fstab'
 
     target = '/etc/fstab'
 
@@ -50,5 +57,19 @@ dep 'existing hosts', :for => :linux do
 end
 
 apt_source 'lucid security apt source', :for => :ubuntu  do
-	  source_name 'lucid-security'
+    source_name 'lucid-security'
+end
+
+meta :tasksel do
+    accepts_list_for :task
+    template {
+	met? {}
+	meet {
+	    sudo "tasksel install #{task}"
+	}
+    }
+end
+
+tasksel 'server install', :for => :ubuntu do
+    task 'server'
 end
