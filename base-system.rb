@@ -23,6 +23,18 @@ dep 'existing fstab', :for => :linux do
     }
 end
 
+dep 'kernel image', :for => :ubuntu do
+    met? { true }
+end
+
+dep 'bootloader', :for => :ubuntu do
+    met? { true }
+end
+
+dep 'bootable system', :for => :linux do
+    requires 'configured fstab', 'kernel image', 'bootloader'
+end
+
 dep 'configured fstab', :for => :linux do
     requires 'populated dev', 'mounted proc', 'existing fstab'
 
