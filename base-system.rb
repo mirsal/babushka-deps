@@ -71,5 +71,6 @@ meta :tasksel do
 end
 
 tasksel 'server install', :for => :ubuntu do
+    requires 'existing hosts', 'hostname', 'configured fstab', 'lucid security apt source'
     task 'server'
 end
