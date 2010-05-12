@@ -23,8 +23,12 @@ dep 'existing fstab', :for => :linux do
     }
 end
 
-dep 'kernel image', :for => :ubuntu do
-    met? { true }
+pkg 'kernel image', :for => :ubuntu do
+    installs {
+        via :apt, 'linux-server'
+    }
+
+    provides []
 end
 
 pkg 'bootloader', :for => :ubuntu do
