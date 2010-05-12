@@ -81,7 +81,7 @@ meta :security_apt_source do
   }
 end
 
-security_apt_source 'lucid security apt source', :for => :ubuntu  do
+security_apt_source 'main security apt source', :for => :ubuntu  do
     source_name 'main'
 end
 
@@ -96,6 +96,6 @@ meta :tasksel do
 end
 
 tasksel 'server install', :for => :ubuntu do
-    requires 'existing hosts', 'hostname', 'configured fstab', 'lucid security apt source'
+    requires 'existing hosts', 'hostname', 'configured fstab', 'main security apt source'
     task 'server'
 end
