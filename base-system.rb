@@ -56,8 +56,33 @@ dep 'existing hosts', :for => :linux do
     }
 end
 
-apt_source 'lucid security apt source', :for => :ubuntu  do
-    source_name 'lucid-security'
+def security_source_for_system
+    {
+      :debian => 'http://security.debian.org/security',
+      :ubuntu => 'http://security.ubuntu.com/security'
+    } [Base.host.flavour]
+end
+
+meta :security_apt_source do
+  accepts_list_for :source_name
+  template {
+    met? {
+      source_name.all? {|name|
+        grep(/^deb .* #{Babushka::Base.host.name}-security (\w+ )*#{Regexp.escape(name.to_s)}/, '/etc/apt/sources.list')
+      }
+    }
+    before { Babushka::AptHelper.source_for_system }
+    meet {
+      source_name.each {|name|
+        append_to_file "deb #{security_source_for_system} #{Babushka::Base.host.name}-security #{name}", '/etc/apt/sources.list', :sudo => true
+      }
+    }
+    after { Babushka::AptHelper.update_pkg_lists }
+  }
+end
+
+security_apt_source 'lucid security apt source', :for => :ubuntu  do
+    source_name 'main'
 end
 
 meta :tasksel do
