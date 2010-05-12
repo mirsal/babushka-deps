@@ -58,8 +58,8 @@ end
 
 def security_source_for_system
     {
-      :debian => 'http://security.debian.org/security',
-      :ubuntu => 'http://security.ubuntu.com/security'
+      :debian => 'http://security.debian.org/debian',
+      :ubuntu => 'http://security.ubuntu.com/ubuntu'
     } [Babushka::Base.host.flavour]
 end
 
