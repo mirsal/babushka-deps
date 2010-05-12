@@ -27,8 +27,12 @@ dep 'kernel image', :for => :ubuntu do
     met? { true }
 end
 
-dep 'bootloader', :for => :ubuntu do
-    met? { true }
+pkg 'bootloader', :for => :ubuntu do
+    installs {
+        via :apt, 'grub'
+    }
+
+    provides []
 end
 
 dep 'bootable system', :for => :linux do
