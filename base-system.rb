@@ -85,16 +85,22 @@ security_apt_source 'main security apt source', :for => :ubuntu  do
 end
 
 meta :tasksel do
-    accepts_list_for :task
+    accepts_list_for :install_task
     template {
-	met? { shell 'tasksel --list-tasks | grep "^i server"' }
-	meet {
-	    sudo "tasksel install #{task}"
-	}
+	met? {
+            install_task.all? { |task|
+                shell "tasksel --list-tasks | grep \"^i #{task}\""
+            }
+        }
+        meet {
+            install_task.each { |task|
+                sudo "tasksel install #{task}"
+            }
+        }
     }
 end
 
 tasksel 'server install', :for => :ubuntu do
     requires 'existing hosts', 'hostname', 'configured fstab', 'main security apt source'
-    task 'server'
+    install_task 'server'
 end
