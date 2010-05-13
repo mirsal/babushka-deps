@@ -8,13 +8,28 @@ pkg 'php cgi', :for => :ubuntu  do
   provides []
 end
 
-dep 'php for lighttpd', :for => :linux do
-  requires 'lighttpd webserver', 'php cgi'
-  met? {
-    File.exist? '/etc/lighttpd/conf-enabled/10-fastcgi.conf'   
+meta :lighttpd_module do
+  accepts_list_for :name
+  template {
+    requires 'lighttpd webserver'
+    met? {
+      name.all? {|mod|
+        shell('lighttpd-enable-mod').grep "Available modules:.*#{mod}"
+      }       
+    }
+    meet {
+      name.each {|mod|
+        sudo "lighttpd-enable-mod #{mod}"
+      }
+      sudo('/etc/init.d/lighttpd restart')
+    }
   }
+end
 
-  meet {
-   sudo '/usr/sbin/lighty-enable-mod fastcgi'
-  }
+lighttpd_module 'fastcgi' do
+  name 'fastcgi'
+end
+
+dep 'php for lighttpd', :for => :linux do
+  requires 'lighttpd webserver', 'fastcgi', 'php cgi'
 end
