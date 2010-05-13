@@ -44,7 +44,10 @@ meta :lighttpd_vhost do
     helper(:lighttpd_vhost_conf_for) {|priority, domain| "/etc/lighttpd/conf-available/#{priority}-#{domain}.conf"}
 
     met? {
-      domain.all? {|domain| lighttpd_module_enabled? domain}
+      domain.all? {|domain|
+        lighttpd_module_enabled? domain
+        log_ok "#{domain}"
+      }
     }
     meet {
       domain.each_with_index {|index, domain|
