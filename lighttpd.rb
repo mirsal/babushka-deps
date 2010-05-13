@@ -48,13 +48,11 @@ meta :lighttpd_vhost do
     helper(:lighttpd_vhost_conf_for) {|priority, domain| "/etc/lighttpd/conf-available/#{priority}-#{domain}.conf"}
 
     met? {
-      define_var :domain, { :message => 'Symfony vhost domain' }
 
       domain = var(:domain)
       lighttpd_module_enabled? domain
     }
     meet {
-      define_var :document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:domain)}"} }
       domain = var(:domain)
 
       document_root = var(:document_root)
@@ -69,6 +67,8 @@ meta :lighttpd_vhost do
 end
 
 lighttpd_vhost 'symfony lighttpd vhost' do
+  define_var :domain, { :message => 'Symfony vhost domain' }
+  define_var :document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:domain)}"} }
   config_file_template 'lighttpd/vhosts/symfony.conf.erb'
   priority 15
 end
