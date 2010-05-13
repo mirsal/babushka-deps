@@ -40,6 +40,7 @@ end
 
 meta:lighttpd_vhost do
   accepts_list_for :domain
+  accepts_list_for :document_root
   accepts_list_for :config_file_template
   accepts_list_for :priority
 
@@ -56,7 +57,7 @@ meta:lighttpd_vhost do
     }
     meet {
       log var(:document_root)
-      sudo "mkdir -p #{var(:document_root)}"
+      sudo "mkdir -p #{document_root}"
       render_erb config_file_template, :to => lighttpd_vhost_conf_for(priority, domain), :sudo => true
       log "installed vhost for #{domain}"
       enable_lighttpd_module domain
@@ -68,6 +69,7 @@ end
 
 lighttpd_vhost 'symfony lighttpd vhost' do
   domain var(:domain)
+  document_root var(:document_root)
   config_file_template 'lighttpd/vhosts/symfony.conf.erb'
   priority 15
 end
