@@ -9,16 +9,16 @@ pkg 'php cgi', :for => :ubuntu  do
 end
 
 meta :lighttpd_module do
-  accepts_list_for :name
+  accepts_list_for :module_name
   template {
     requires 'lighttpd webserver'
     met? {
-      name.all? {|mod|
+      module_name.all? {|mod|
         shell('lighttpd-enable-mod').grep "Available modules:.*#{mod}"
       }       
     }
     meet {
-      name.each {|mod|
+      module_name.each {|mod|
         sudo "lighttpd-enable-mod #{mod}"
       }
       sudo('/etc/init.d/lighttpd restart')
