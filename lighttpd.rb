@@ -50,11 +50,11 @@ meta :lighttpd_vhost do
       }
     }
     meet {
-        render_erb config_file_template, :to => lighttpd_vhost_conf_for(priority, domain), :sudo => true
-        log "installed vhost for #{domain}"
-        enable_lighttpd_module domain
-        log "enabled vhost for #{domain}"
-      }
+      render_erb config_file_template, :to => lighttpd_vhost_conf_for(priority, domain), :sudo => true
+      log "installed vhost for #{domain}"
+      enable_lighttpd_module domain
+      log "enabled vhost for #{domain}"
+      
       sudo('/etc/init.d/lighttpd restart')
     }
   }
