@@ -62,3 +62,15 @@ meta :lighttpd_vhost do
     }
   }
 end
+
+lighttpd_vhost 'symfony lighttpd vhost' do
+  domain var(:domain)
+  config_file_template 'lighttpd/vhosts/symfony.conf.erb'
+  priority 15
+end
+
+dep 'symfony vhost' do
+  setup {
+      requires 'php', "symfony #{var(:webserver)} vhost"
+  }
+end
