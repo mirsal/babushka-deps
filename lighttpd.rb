@@ -55,8 +55,8 @@ meta:lighttpd_vhost do
       }
     }
     meet {
-      define_var :document_root
-      sudo "mkdir -p #{var(:document_root)}"      
+      log var(:document_root)
+      sudo "mkdir -p #{var(:document_root)}"
       render_erb config_file_template, :to => lighttpd_vhost_conf_for(priority, domain), :sudo => true
       log "installed vhost for #{domain}"
       enable_lighttpd_module domain
