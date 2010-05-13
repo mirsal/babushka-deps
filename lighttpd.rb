@@ -73,6 +73,6 @@ end
 
 dep 'symfony vhost' do
   setup {
-      requires 'php', "symfony #{var(:webserver)} vhost"
+      requires 'php', "symfony #{var(:webserver, :default => 'lighttpd')} vhost"
   }
 end
