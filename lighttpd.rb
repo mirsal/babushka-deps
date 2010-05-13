@@ -14,7 +14,7 @@ meta :lighttpd_module do
     requires 'lighttpd webserver'
     met? {
       module_name.all? {|mod|
-        shell('lighttpd-enable-mod').grep "Available modules:.*#{mod}"
+        shell('lighttpd-enable-mod').grep "Already enabled modules:.*#{mod}"
       }       
     }
     meet {
