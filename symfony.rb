@@ -51,7 +51,7 @@ def symfony_task task, args = nil
 end
 
 dep 'permissions set' do
-  requires 'cache dir exists'
+  requires 'cache dir exists', 'log dir exists'
   met? {
     in_dir var(:document_root) do
       sprintf('%o', File.stat('cache').mode) == '40777' &&
@@ -64,6 +64,7 @@ dep 'permissions set' do
 end
 
 dep 'symfony app' do
+  define_var :document_root, { :message => 'Symfony project root', :default => '/opt' / var(:domain) }
   setup {
     requires 'php', 'symfony vhost', 'cloned symfony project repo', 'permissions set' 
   }
