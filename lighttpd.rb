@@ -4,7 +4,7 @@ pkg 'lighttpd webserver', :for => :ubuntu do
 end
 
 def lighttpd_module_enabled? mod
-  return shell "lighttpd-enable-mod none |grep \"^Already enabled modules:.*#{mod}\""
+  return shell "lighttpd-enable-mod none |grep \"^Already enabled modules:.* #{mod}\""
 end
 
 def enable_lighttpd_module mod
@@ -38,7 +38,7 @@ lighttpd_module 'fastcgi' do
   module_name 'fastcgi'
 end
 
-meta:lighttpd_vhost do
+meta :lighttpd_vhost do
   accepts_list_for :domain
   accepts_list_for :document_root
   accepts_list_for :config_file_template
