@@ -67,7 +67,7 @@ meta :lighttpd_vhost do
 end
 
 lighttpd_vhost 'symfony lighttpd vhost' do
-  define_var :document_root, { :message => 'Symfony project root', :default => L{"/opt#{var(:domain)}"} }
+  define_var :document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:domain)}"} }
 
   domain var(:domain)
   document_root var(:document_root)

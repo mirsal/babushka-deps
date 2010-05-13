@@ -5,7 +5,7 @@
 server.modules += ( "mod_simple_vhost" )
 
 $HTTP ["host"] == "<%= var :domain %>" {
-server.document-root = "<%= var :document_root %>"
+server.document-root = "<%= var :document_root %>/web"
   server.indexfiles = ( "index.php", "index.html")
   server.error-handler-404 = "/index.php"
 
