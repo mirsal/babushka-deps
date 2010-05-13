@@ -30,7 +30,7 @@ dep 'cache dir exists' do
   }
 end
 
-def symfony_task task, args
+def symfony_task task, args = nil
   in_dir var(:document_root) do
     sudo "php symfony #{task} #{args}"
   end
