@@ -1,4 +1,5 @@
 dep 'populated dev', :for => :linux do
+  requires 'mounted proc'
   met? { '/dev'.p.empty? }
   meet {
     in_dir '/dev' do
