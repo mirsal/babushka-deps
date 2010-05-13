@@ -1,9 +1,11 @@
 pkg 'lighttpd webserver', :for => :ubuntu do
   installs { via :apt, 'lighttpd' }
+  provides []
 end
 
 pkg 'php cgi', :for => :ubuntu  do
   installs { via :apt, 'php5-cgi' }
+  provides []
 end
 
 dep 'php for lighttpd', :for => :linux do
