@@ -68,7 +68,7 @@ end
 
 lighttpd_vhost 'symfony lighttpd vhost' do
   domain var(:domain)
-  document_root var(:doc_root)
+  document_root var(:document_root)
   config_file_template 'lighttpd/vhosts/symfony.conf.erb'
   priority 15
 end
