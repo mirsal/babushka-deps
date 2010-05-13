@@ -6,6 +6,16 @@ end
 
 dep 'symfony app' do
   setup {
-      requires 'php', 'symfony vhost' 
+    requires 'php', 'symfony vhost' 
+  }
+
+  met? {
+    (var(:document_root) / 'symfony').exist?
+  }
+
+  meet {
+    in_dir var(:document_root) do
+      sudo "git clone #{var(:project_git_repository)}"
+    end
   }
 end
