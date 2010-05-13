@@ -14,6 +14,7 @@ end
 
 def restart_lighttpd!
       sudo('/etc/init.d/lighttpd restart')
+end
 
 meta :lighttpd_module do
   accepts_list_for :module_name
@@ -28,6 +29,7 @@ meta :lighttpd_module do
       module_name.each {|mod|
         enable_lighttpd_module mod
       }
+      restart_lighttpd!
     }
   }
 end
@@ -58,7 +60,7 @@ meta :lighttpd_vhost do
       enable_lighttpd_module domain
       log "enabled vhost for #{domain}"
       
-      sudo('/etc/init.d/lighttpd restart')
+      restart_lighttpd!
     }
   }
 end
