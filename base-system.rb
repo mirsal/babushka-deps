@@ -1,6 +1,6 @@
 dep 'populated dev', :for => :linux do
   requires 'mounted proc'
-  met? { '/dev'.p.empty? }
+  met? { shell 'test "$(ls -A /dev)"' }
   meet {
     in_dir '/dev' do
       sudo 'MAKEDEV generic'
@@ -9,7 +9,7 @@ dep 'populated dev', :for => :linux do
 end
 
 dep 'mounted proc', :for => :linux do
-  met? { '/proc'.p.empty? }
+  met? { shell 'test "$(ls -A /proc)"' }
   meet {
     sudo 'mount -t proc none /proc'
   }
