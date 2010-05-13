@@ -64,7 +64,6 @@ dep 'permissions set' do
 end
 
 dep 'symfony app' do
-  define_var :document_root, { :message => 'Symfony project root', :default => '/opt' / var(:domain) }
   setup {
     requires 'php', 'symfony vhost', 'cloned symfony project repo', 'permissions set' 
   }
