@@ -1,6 +1,6 @@
-pkg 'mysql software', :for => :ubuntu do 
+pkg 'mysql server', :for => :ubuntu do 
   installs {
-    via :apt, %w[mysql-server libmysqlclient-dev]
+    via :apt, %w[mysql-server]
   }
   provides 'mysql'
 end
