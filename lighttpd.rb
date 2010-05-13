@@ -39,9 +39,10 @@ meta :lighttpd_vhost do
   accepts_list_for :config_file_template
   accepts_list_for :priority
 
-  helper(:lighttpd_vhost_conf_for) {|priority, domain| "/etc/lighttpd/conf-available/#{priority}-#{domain}.conf"}
-
   template {
+
+    helper(:lighttpd_vhost_conf_for) {|priority, domain| "/etc/lighttpd/conf-available/#{priority}-#{domain}.conf"}
+
     met? {
       domain.all? {|domain| lighttpd_module_enabled? domain}
     }
