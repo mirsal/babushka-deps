@@ -67,8 +67,6 @@ meta:lighttpd_vhost do
 end
 
 lighttpd_vhost 'symfony lighttpd vhost' do
-  define_var :document_root, :default => L{ '/opt' / var(:domain) }
-
   domain var(:domain)
   document_root var(:document_root)
   config_file_template 'lighttpd/vhosts/symfony.conf.erb'
