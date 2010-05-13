@@ -55,6 +55,7 @@ meta :lighttpd_vhost do
     }
     meet {
       define_var :document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:domain)}"} }
+      domain = var(:domain)
 
       document_root = var(:document_root)
       sudo "mkdir -p #{document_root}"
