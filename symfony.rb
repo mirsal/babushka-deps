@@ -25,7 +25,7 @@ dep 'cache dir exists' do
   }
   meet {
     in_dir var(:document_root) do
-      sudo "mkdir -p #{var(:document_root)}"
+      sudo "mkdir -p #{var(:document_root) / 'cache'}"
     end
   }
 end
