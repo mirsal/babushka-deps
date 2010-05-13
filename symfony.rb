@@ -30,6 +30,20 @@ dep 'cache dir exists' do
   }
 end
 
+dep 'log dir exists' do
+  requires 'cloned symfony project repo'
+  met? {
+    in_dir var(:document_root) do
+      (var(:document_root) / 'log').exist?
+    end
+  }
+  meet {
+    in_dir var(:document_root) do
+      sudo "mkdir -p #{var(:document_root) / 'log'}"
+    end
+  }
+end
+
 def symfony_task task, args = nil
   in_dir var(:document_root) do
     sudo "php symfony #{task} #{args}"
@@ -40,7 +54,8 @@ dep 'permissions set' do
   requires 'cache dir exists'
   met? {
     in_dir var(:document_root) do
-      sprintf('%o', File.stat('cache').mode) == '40777'
+      sprintf('%o', File.stat('cache').mode) == '40777' &&
+      sprintf('%o', File.stat('log').mode) == '40777'
     end
   }
   meet {
