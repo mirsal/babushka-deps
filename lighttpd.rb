@@ -67,7 +67,7 @@ meta :lighttpd_vhost do
 end
 
 lighttpd_vhost 'symfony lighttpd vhost' do
-  define_var :domain, { :message => 'Symfony vhost domain' }
+  define_var :domain, { :message => 'Symfony vhost domain', :default => 'localhost' }
   define_var :document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:domain)}"} }
   config_file_template 'lighttpd/vhosts/symfony.conf.erb'
   priority 15
