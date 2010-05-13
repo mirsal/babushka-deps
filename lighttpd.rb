@@ -27,7 +27,7 @@ meta :lighttpd_module do
 end
 
 lighttpd_module 'fastcgi' do
-  name 'fastcgi'
+  module_name 'fastcgi'
 end
 
 dep 'php for lighttpd', :for => :linux do
