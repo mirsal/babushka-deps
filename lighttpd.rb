@@ -11,10 +11,10 @@ end
 dep 'php for lighttpd', :for => :linux do
   requires 'lighttpd webserver', 'php cgi'
   met? {
-    File.exist? '/etc/lighttpd/conf-available/10-fastcgi-php5.conf'   
+    File.exist? '/etc/lighttpd/conf-enabled/10-fastcgi.conf'   
   }
 
   meet {
-    
+   sudo '/usr/sbin/lighty-enable-mod fastcgi'
   }
 end
