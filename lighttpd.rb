@@ -20,6 +20,7 @@ meta :lighttpd_module do
     meet {
       module_name.each {|mod|
         sudo "lighttpd-enable-mod #{mod}"
+        log_ok "enabled #{mod}"
       }
       sudo('/etc/init.d/lighttpd restart')
     }
