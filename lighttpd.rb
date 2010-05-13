@@ -38,11 +38,6 @@ lighttpd_module 'fastcgi' do
   module_name 'fastcgi'
 end
 
-dep 'existing document root' do
-  met? { var(:document_root).dir? }
-  meet { sudo "mkdir -p #{var(:document_root)}"}
-end
-
 meta:lighttpd_vhost do
   accepts_list_for :domain
   accepts_list_for :config_file_template
@@ -64,7 +59,7 @@ meta:lighttpd_vhost do
       log "installed vhost for #{domain}"
       enable_lighttpd_module domain
       log "enabled vhost for #{domain}"
-      
+      sudo "mkdir -p #{var(:document_root)}"      
       restart_lighttpd!
     }
   }
