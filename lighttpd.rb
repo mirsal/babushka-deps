@@ -38,14 +38,19 @@ lighttpd_module 'fastcgi' do
   module_name 'fastcgi'
 end
 
-meta :lighttpd_vhost do
+dep 'existing document root' do
+    met? {File.directory? var(:document_root)}
+    meet {sudo "mkdir -p #{var(:document_root)}"}
+end
+
+meta:lighttpd_vhost do
   accepts_list_for :domain
   accepts_list_for :config_file_template
   accepts_list_for :priority
 
   template {
 
-    requires 'lighttpd webserver'
+    requires 'lighttpd webserver', 'existing document root'
     helper(:lighttpd_vhost_conf_for) {|priority, domain| "/etc/lighttpd/conf-available/#{priority}-#{domain}.conf"}
 
     met? {
