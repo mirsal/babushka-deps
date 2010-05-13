@@ -26,7 +26,7 @@ dep 'permissions set' do
   requires 'cloned symfony project repo'
   met? {
     in_dir var(:document_root) do
-      File.stat('cache').mode['777'].nil? && log 'cache perms ok'
+      File.stat('cache').mode['777'].nil? && log('cache perms ok')
     end
   }
 end
