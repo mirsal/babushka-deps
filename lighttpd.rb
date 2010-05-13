@@ -3,11 +3,6 @@ pkg 'lighttpd webserver', :for => :ubuntu do
   provides []
 end
 
-pkg 'php cgi', :for => :ubuntu  do
-  installs { via :apt, 'php5-cgi' }
-  provides []
-end
-
 meta :lighttpd_module do
   accepts_list_for :module_name
   template {
@@ -29,8 +24,4 @@ end
 
 lighttpd_module 'fastcgi' do
   module_name 'fastcgi'
-end
-
-dep 'php for lighttpd', :for => :linux do
-  requires 'lighttpd webserver', 'fastcgi', 'php cgi'
 end
