@@ -47,8 +47,8 @@ meta :lighttpd_vhost do
       domain.all? {|domain| lighttpd_module_enabled? domain}
     }
     meet {
-      domain.each_with_index {|i, domain|
-        render_erb config_file_template[i], :to => lighttpd_vhost_conf_for(priority[i], domain), :sudo => true
+      domain.each_with_index {|index, domain|
+        render_erb config_file_template[index], :to => lighttpd_vhost_conf_for(priority[index], domain), :sudo => true
         log_ok "installed vhost for #{domain}"
         enable_lighttpd_module domain
         log_ok "enabled vhost for #{domain}"
