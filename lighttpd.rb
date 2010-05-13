@@ -12,6 +12,9 @@ def enable_lighttpd_module mod
   log_ok "enabled #{mod}"
 end
 
+def restart_lighttpd!
+      sudo('/etc/init.d/lighttpd restart')
+
 meta :lighttpd_module do
   accepts_list_for :module_name
   template {
@@ -25,7 +28,6 @@ meta :lighttpd_module do
       module_name.each {|mod|
         enable_lighttpd_module mod
       }
-      sudo('/etc/init.d/lighttpd restart')
     }
   }
 end
@@ -41,6 +43,7 @@ meta :lighttpd_vhost do
 
   template {
 
+    requires 'lighttpd webserver'
     helper(:lighttpd_vhost_conf_for) {|priority, domain| "/etc/lighttpd/conf-available/#{priority}-#{domain}.conf"}
 
     met? {
@@ -58,10 +61,4 @@ meta :lighttpd_vhost do
       sudo('/etc/init.d/lighttpd restart')
     }
   }
-end
-
-lighttpd_vhost 'test domain' do
-  domain var(:domain)
-  config_file_template 'lighttpd/vhosts/testdom.conf.erb'
-  priority 15
 end
