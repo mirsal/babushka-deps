@@ -40,8 +40,7 @@ dep 'permissions set' do
   requires 'cache dir exists'
   met? {
     in_dir var(:document_root) do
-      log File.stat('cache').mode
-      File.stat('cache').mode == '0777' && log('cache perms ok')
+      sprintf('%o', File.stat('cache').mode) == '40777'
     end
   }
   meet {
