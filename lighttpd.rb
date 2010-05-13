@@ -50,8 +50,7 @@ meta :lighttpd_vhost do
       }
     }
     meet {
-      domain.each_with_index {|index, domain|
-        render_erb config_file_template[index], :to => lighttpd_vhost_conf_for(priority[index], domain), :sudo => true
+        render_erb config_file_template, :to => lighttpd_vhost_conf_for(priority, domain), :sudo => true
         log "installed vhost for #{domain}"
         enable_lighttpd_module domain
         log "enabled vhost for #{domain}"
