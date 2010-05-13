@@ -45,7 +45,7 @@ meta:lighttpd_vhost do
 
   template {
 
-    requires 'lighttpd webserver', 'existing document root'
+    requires 'lighttpd webserver'
     helper(:lighttpd_vhost_conf_for) {|priority, domain| "/etc/lighttpd/conf-available/#{priority}-#{domain}.conf"}
 
     met? {
