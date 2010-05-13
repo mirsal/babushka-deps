@@ -37,7 +37,7 @@ dep 'bootable system', :for => :linux do
 end
 
 dep 'configured fstab', :for => :linux do
-  requires 'populated dev', 'mounted proc', 'existing fstab'
+  requires 'populated dev', 'mounted proc'
 
   target = '/etc/fstab'
 
