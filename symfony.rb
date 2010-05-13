@@ -15,7 +15,7 @@ dep 'symfony app' do
 
   meet {
     in_dir var(:document_root) do
-      sudo "git clone #{var(:project_git_repository)} #{var(:document_root)}"
+      sudo "git clone #{var(:project_git_repository)} ."
     end
   }
 end
