@@ -70,9 +70,3 @@ lighttpd_vhost 'symfony lighttpd vhost' do
   config_file_template 'lighttpd/vhosts/symfony.conf.erb'
   priority 15
 end
-
-dep 'symfony vhost' do
-  setup {
-      requires 'php', "symfony #{var(:webserver, :default => 'lighttpd')} vhost"
-  }
-end
