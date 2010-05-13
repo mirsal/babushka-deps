@@ -39,8 +39,8 @@ lighttpd_module 'fastcgi' do
 end
 
 dep 'existing document root' do
-    met? {File.directory? var(:document_root)}
-    meet {sudo "mkdir -p #{var(:document_root)}"}
+  met? { var(:document_root).dir? }
+  meet { sudo "mkdir -p #{var(:document_root)}"}
 end
 
 meta:lighttpd_vhost do
