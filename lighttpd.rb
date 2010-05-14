@@ -49,11 +49,11 @@ meta :lighttpd_vhost do
 
     met? {
 
-      domain = var(:domain)
+      domain = var(:vhost_domain)
       lighttpd_module_enabled? domain
     }
     meet {
-      domain = var(:domain)
+      domain = var(:vhost_domain)
 
       document_root = var(:vhost_document_root)
       sudo "mkdir -p #{document_root}"
@@ -67,8 +67,8 @@ meta :lighttpd_vhost do
 end
 
 lighttpd_vhost 'symfony lighttpd vhost' do
-  define_var :domain, { :message => 'Symfony vhost domain', :default => 'localhost' }
-  define_var :vhost_document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:domain)}"} }
+  define_var :vhost_domain, { :message => 'Symfony vhost domain', :default => 'localhost' }
+  define_var :vhost_document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:vhost_domain)}"} }
   config_file_template 'lighttpd/vhosts/symfony.conf.erb'
   priority 15
 end
