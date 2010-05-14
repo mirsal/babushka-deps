@@ -55,7 +55,7 @@ meta :lighttpd_vhost do
     meet {
       domain = var(:domain)
 
-      document_root = var(:document_root)
+      document_root = var(:vhost_document_root)
       sudo "mkdir -p #{document_root}"
       render_erb config_file_template, :to => lighttpd_vhost_conf_for(priority, domain), :sudo => true
       log "installed vhost for #{domain}"
@@ -68,7 +68,7 @@ end
 
 lighttpd_vhost 'symfony lighttpd vhost' do
   define_var :domain, { :message => 'Symfony vhost domain', :default => 'localhost' }
-  define_var :document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:domain)}"} }
+  define_var :vhost_document_root, { :message => 'Symfony project root', :default => L{"/opt/#{var(:domain)}"} }
   config_file_template 'lighttpd/vhosts/symfony.conf.erb'
   priority 15
 end

@@ -6,11 +6,11 @@ end
 
 dep 'cloned symfony project repo' do
   met? {
-    (var(:document_root) / 'symfony').exist?
+    (var(:vhost_document_root) / 'symfony').exist?
   }
 
   meet {
-    in_dir var(:document_root) do
+    in_dir var(:vhost_document_root) do
       sudo "git clone #{var(:project_git_repository)} ."
     end
   }
@@ -19,13 +19,13 @@ end
 dep 'cache dir exists' do
   requires 'cloned symfony project repo'
   met? {
-    in_dir var(:document_root) do
-      (var(:document_root) / 'cache').exist?
+    in_dir var(:vhost_document_root) do
+      (var(:vhost_document_root) / 'cache').exist?
     end
   }
   meet {
-    in_dir var(:document_root) do
-      sudo "mkdir -p #{var(:document_root) / 'cache'}"
+    in_dir var(:vhost_document_root) do
+      sudo "mkdir -p #{var(:vhost_document_root) / 'cache'}"
     end
   }
 end
@@ -33,19 +33,19 @@ end
 dep 'log dir exists' do
   requires 'cloned symfony project repo'
   met? {
-    in_dir var(:document_root) do
-      (var(:document_root) / 'log').exist?
+    in_dir var(:vhost_document_root) do
+      (var(:vhost_document_root) / 'log').exist?
     end
   }
   meet {
-    in_dir var(:document_root) do
-      sudo "mkdir -p #{var(:document_root) / 'log'}"
+    in_dir var(:vhost_document_root) do
+      sudo "mkdir -p #{var(:vhost_document_root) / 'log'}"
     end
   }
 end
 
 def symfony_task task, args = nil
-  in_dir var(:document_root) do
+  in_dir var(:vhost_document_root) do
     sudo "php symfony #{task} #{args}"
   end
 end
@@ -53,7 +53,7 @@ end
 dep 'permissions set' do
   requires 'cache dir exists', 'log dir exists'
   met? {
-    in_dir var(:document_root) do
+    in_dir var(:vhost_document_root) do
       sprintf('%o', File.stat('cache').mode) == '40777' &&
       sprintf('%o', File.stat('log').mode) == '40777'
     end
