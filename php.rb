@@ -1,9 +1,9 @@
-pkg 'php cgi', :for => :ubuntu  do
+pkg 'php cgi', :for => :linux  do
   installs { via :apt, 'php5-cgi' }
   provides []
 end
 
-pkg 'php cli', :for => :ubuntu do
+pkg 'php cli', :for => :linux do
   installs { via :apt, 'php5-cli' }
   provides []
 end
