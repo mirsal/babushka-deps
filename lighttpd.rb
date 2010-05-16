@@ -1,4 +1,4 @@
-pkg 'lighttpd webserver', :for => :ubuntu do
+pkg 'lighttpd webserver', :for => :linux do
   installs { via :apt, 'lighttpd' }
   provides []
 end
