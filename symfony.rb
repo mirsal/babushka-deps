@@ -11,7 +11,8 @@ dep 'cloned symfony project repo' do
 
   meet {
     in_dir var(:vhost_document_root) do
-      sudo "git clone #{var(:project_git_repository)} ."
+      sudo "git clone #{var(:project_git_repository)} babushka_target"
+      sudo "mv babushka_target/* ./; rmdir babushka_target"
     end
   }
 end
